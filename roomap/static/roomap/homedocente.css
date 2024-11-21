@@ -1,0 +1,787 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    overflow-x: hidden;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;
+    padding: 15px;
+}
+
+.logo {
+    width: 250px;
+    margin-left: 25px;
+}
+
+nav {
+    transform: translate(40%, 10%);
+    width: 100%;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 150px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+.search-container {
+    position: relative;
+    width: 30%;
+    transform: translate(12%, 110.5%);
+}
+
+.search-bar {
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    color: gray;
+    border-radius: 60px;
+    padding-left: 40px;
+}
+
+.search-container i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: gray;
+}
+
+.block-selector {
+    padding: 10px;
+    margin-left: -30px;
+    font-size: 16px;
+    position: relative;
+    color: gray;
+    transform: translate(980%, 10%);
+    border-radius: 5px;
+}
+
+.room-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.room-card {
+    width: 30%;
+    background-color: #000;
+    color: white;
+    overflow: hidden;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s linear; /* Adiciona a transição */
+}
+
+.room-card:hover {
+    transform: scale(1); /* Amplia a caixa inteira */
+}
+
+.room-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    transition: transform 0.25s linear; /* Adiciona a transição para a imagem */
+}
+
+.room-card:hover img {
+    transform: scale(1.1); /* Amplia a imagem quando a caixa é ampliada */
+}
+
+.room-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.room-info h3 {
+    margin-bottom: 10px;
+}
+
+.room-info p {
+    margin-bottom: 15px;
+}
+
+.room-info a {
+    padding: 10px;
+    width: 100%;
+    background-color: #ec1c24;
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.room-info a:hover {
+    background-color: #ff3535;
+    text-decoration: underline;
+}
+
+#planta-escola {
+    width: 1000px;
+    height: 835px;
+    background-size: cover;
+    position: relative;
+    margin-left: 835px;
+}
+
+#planta-escola h1 {
+    color: #f5f5f5;
+    margin-left: -700px ;
+}
+
+
+.sala {
+    width: 100px;
+    height: 50px;
+    color: white;
+    text-align: center;
+    background-color: rgb(44, 160, 59);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 7%;
+}
+
+#auditorio {
+    top: 300px;
+    left: 60px;
+    width: 165px;
+    height: 70px;
+
+}
+
+#oficina-eletrica {
+    top: 460px;
+    left: 233px;
+    width: 82px;
+    height: 160px;
+}
+
+#biblioteca {
+    top: 270px;
+    left: 852px;
+    width: 60px;
+    height: 95px;
+}
+
+#lab-cam {
+    top: 410px;
+    left: 465px;
+    width: 45px;
+    height: 55px;
+}
+
+#lab-pnh {
+    top: 410px;
+    left: 517px;
+    width: 45px;
+    height: 55px;
+}
+
+#solda {
+    top: 487px;
+    left: 505px;
+    width: 30px;
+    height: 70px;
+}
+
+#oficina-usinagem {
+    top: 488px;
+    left: 550px;
+    height: 127px;
+    width: 187px;
+}
+
+#oficina-automotiva {
+    top: 488px;
+    left: 800px;
+    height: 127px;
+    width: 187px;
+}
+
+#t1 {
+    top: 490px;
+    left: 335px;
+    width: 45px;
+    height: 60px;
+}
+
+#t2 {
+    top: 560px;
+    left: 335px;
+    width: 45px;
+    height: 60px;
+}
+
+#t3 {
+    top: 410px;
+    left: 620px;
+    width: 45px;
+    height: 55px;
+}
+
+#t4 {
+    top: 410px;
+    left: 570px;
+    width: 45px;
+    height: 55px;
+}
+
+#lab-cad {
+    top: 487px;
+    left: 405px;
+    width: 60px;
+    height: 50px;
+}
+
+#lab-mec {
+    top: 487px;
+    left: 470px;
+    width: 30px;
+}
+
+#lab-redes {
+    top: 590px;
+    left: 383px;
+    width: 60px;
+    height: 50px;
+}
+
+#lab-clip {
+    top: 410px;
+    left: 717px;
+    width: 45px;
+    height: 55px;
+}
+
+#lab-ele {
+    top: 410px;
+    left: 766px;
+    width: 70px;
+    height: 55px;
+}
+
+#maquinas-comand {
+    top: 410px;
+    left: 840px;
+    width: 70px;
+    height: 55px;
+}
+
+#lab-metrologia {
+    top: 40px;
+    left: 852px;
+    width: 60px;
+}
+
+#oficina-costura {
+    top: 40px;
+    left: 930px;
+    width: 60px;
+    height: 75px;
+}
+
+#lab-auto-residencial {
+    top: 120px;
+    left: 852px;
+    width: 60px;
+}
+
+#lab-adm {
+    top: 120px;
+    left: 930px;
+    width: 60px;
+}
+
+#sala-aula-1 {
+    top: 285px;
+    left: 930px;
+    width: 60px;
+}
+
+#sala-aula-2 {
+    top: 230px;
+    left: 930px;
+    width: 60px;
+
+}
+
+#sala-aula-3 {
+    top: 175px;
+    left: 930px;
+    width: 60px;
+}
+
+#sala-aula-4 {
+    top: 175px;
+    left: 852px;
+    width: 60px;
+}
+
+
+#med-tridimencional {
+    top: 95px;
+    left: 852px;
+    width: 60px;
+    height: 20px;
+}
+
+.elementers {
+    margin-top: 20px;
+}
+
+main {
+    position: absolute; /* Fixa o main sobre o carousel */
+    top: 50%; /* Centraliza verticalmente */
+    left: 5%; /* Posiciona o main 5% a partir da borda esquerda */
+    transform: translateY(-50%); /* Apenas centraliza verticalmente */
+    z-index: 2; /* Garante que o main fique acima do carousel */
+    text-align: left; /* Alinha o texto à esquerda */
+    width: 40%; /* Aumenta a largura para "esticar" o conteúdo */
+    padding: 30px; /* Adiciona espaçamento interno */
+}
+
+
+main {
+    position: absolute; /* Fixa o main sobre o carousel */
+    top: 50%; /* Centraliza verticalmente */
+    left: 5%; /* Posiciona o main 5% a partir da borda esquerda */
+    transform: translateY(-50%); /* Apenas centraliza verticalmente */
+    z-index: 2; /* Garante que o main fique acima do carousel */
+    text-align: left; /* Alinha o texto à esquerda */
+    width: 40%; /* Aumenta a largura para "esticar" o conteúdo */
+    padding: 30px; /* Adiciona espaçamento interno */
+}
+
+/* Estilo do container do carousel */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 88vh;
+}
+
+.carousel-wrapper {
+    width: 400%; /* 4 itens * 100% */
+    transition: transform 1s linear;
+    height: 100%;
+}
+
+.carousel-items {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-item {
+    position: relative;
+    width: 25%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+  .item1 {
+      width: 230vh;
+      height: 90vh;
+  }
+
+  .item2 {
+      width: 214.9vh;
+      height: 90vh;
+  }
+
+  .item3 {
+      width: 217.5vh;
+      height: 90vh;
+  }
+
+  .item4 {
+      width: 225vh;
+      height: 90vh;
+  }
+
+
+h1 {
+    font-size: 4rem;
+    font-weight: 300;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.highlight {
+    color: #ff4454;
+    font-weight:   600;
+}
+
+.description {
+    font-size: 25px;
+    line-height: 2;
+    margin-bottom: 40px;
+    color: #ffffff;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.btn {
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.administrador {
+    background-color: #e63946;
+    margin-left: 0px;
+}
+
+.tabela {
+    position: relative;
+}
+
+#infoTable {
+    position: absolute;
+    top: 20px;
+    left: 90vh;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: none;
+    padding: 20px; /* Adiciona um padding interno */
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease-in-out;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.table-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 80vh;
+    max-width: 1400px;
+    margin: 0 auto;
+    border-collapse: collapse; /* Remove o espaçamento entre as células */
+}
+
+th {
+    background-color: #ff6b6b;
+    color: #fff;
+    font-weight: bold;
+    padding: 20px; /* Ajusta o padding do cabeçalho */
+    border-radius: 8px;
+    text-align: center; /* Alinha o texto à esquerda */
+    font-size: 20px;
+}
+
+tbody {
+    display: block; /* Permite o scroll apenas para o corpo da tabela */
+    max-height: 450px; /* Define uma altura máxima para o corpo */
+    overflow-y: auto; /* Permite scroll vertical no tbody */
+}
+
+tbody tr {
+    background-color: #ffffff;
+    border-radius: 12px; /* Bordas arredondadas para as linhas */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin: 10px 0; /* Espaçamento entre os quadrados */
+    display: flex;
+    justify-content: space-between; /* Alinha o conteúdo */
+    padding: 30px; /* Padding interno */
+    border: 0.01px solid rgb(200, 200, 200);
+    font-size: 20px;
+}
+
+td {
+    flex: 1; /* Faz cada célula ocupar o mesmo espaço */
+    padding: 15px; /* Ajusta o padding para maior altura */
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1; /* Cor ao passar o mouse */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sign {
+    width: 100%;
+    transition-duration: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sign svg {
+    width: 20px;
+  }
+
+  .sign svg path {
+    fill: white;
+    stroke: white; /* Adiciona o contorno */
+    stroke-width: 1; /* Ajusta a espessura do contorno */
+  }
+
+.text {
+    color: white;
+    font-size: 20px;
+    font-weight: lighter;
+}
+
+td{
+    padding: 8px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.icon-trash{
+    display: inline-block;
+    color: #e63946;
+    width: 16px;
+    height: 16px;
+    transform: translate(500%, 10%);
+}
+
+.btn-mapa {
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    transition: filter 250ms;
+    user-select: none;
+    touch-action: manipulation;
+    margin-top: 20px;
+   }
+
+   .shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: hsl(0deg 0% 0% / 0.25);
+    will-change: transform;
+    transform: translateY(2px);
+    transition: transform
+       600ms
+       cubic-bezier(.3, .7, .4, 1);
+   }
+
+   .edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(
+       to left,
+       hsl(340deg 100% 16%) 0%,
+       hsl(340deg 100% 32%) 8%,
+       hsl(340deg 100% 32%) 92%,
+       hsl(340deg 100% 16%) 100%
+     );
+   }
+
+   .front {
+    display: block;
+    position: relative;
+    padding: 12px 27px;
+    border-radius: 12px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    background: hsl(345deg 100% 47%);
+    will-change: transform;
+    transform: translateY(-4px);
+    transition: transform
+       600ms
+       cubic-bezier(.3, .7, .4, 1);
+   }
+
+   .btn-mapa:hover {
+    filter: brightness(110%);
+   }
+
+   .btn-mapa:hover .front {
+    transform: translateY(-6px);
+    transition: transform
+       250ms
+       cubic-bezier(.3, .7, .4, 1.5);
+   }
+
+   .btn-mapa:active .front {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+   }
+
+   .btn-mapa:hover .shadow {
+    transform: translateY(4px);
+    transition: transform
+       250ms
+       cubic-bezier(.3, .7, .4, 1.5);
+   }
+
+   .btn-mapa:active .shadow {
+    transform: translateY(1px);
+    transition: transform 34ms;
+   }
+
+   .btn-mapa:focus:not(:focus-visible) {
+    outline: none;
+   }
+
+
+   #btn-agenda {
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    font-weight: bold;
+    padding: 0.7em 2em;
+    border: 3px solid hsl(345deg 100% 47%);
+    border-radius: 17px;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+    color: hsl(345deg 100% 47%);
+    text-decoration: none;
+    transition: 0.3s ease all;
+    z-index: 1;
+    margin-left: 20px;
+    height: 58px;
+    transform: translate(0, -10%);
+    box-shadow: #000;
+    text-shadow: #000;
+  }
+
+  #btn-agenda:before {
+    transition: 0.5s all ease;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+    opacity: 0;
+    content: '';
+    background: hsl(345deg 100% 47%);
+    z-index: -1;
+    border-radius: 12px;
+  }
+
+  #btn-agenda:hover, .btn-agenda:focus {
+    color: white;
+  }
+
+  #btn-agenda:hover:before, .btn-agenda:focus:before {
+    transition: 0.5s all ease;
+    left: 0;
+    right: 0;
+    opacity: 1;
+  }
+
+  #btn-agenda:active {
+    transform: scale(0.9);
+    text-shadow: #000000;
+  }
+
+.no-results {
+    text-align: center;
+    margin: 20px 0; /* Espaçamento no topo e na base */
+    color: #555; /* Cor do texto */
+    font-family: 'Montserrat', sans-serif; /* Mesma fonte usada no resto do layout */
+    padding: 30px; /* Espaçamento interno */
+    border: 2px dashed #ccc; /* Borda estilizada */
+    border-radius: 10px; /* Bordas arredondadas */
+    background-color: #f9f9f9; /* Fundo claro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+.no-results-icon {
+    width: 150px; /* Tamanho do ícone */
+    height: 150px;
+    margin-bottom: 15px; /* Espaço entre o ícone e o título */
+    opacity: 0.8; /* Transparência leve para suavizar */
+}
+
+.no-results h2 {
+    font-size: 1.8rem; /* Tamanho grande para o título */
+    color: #333; /* Cor mais escura */
+    margin-bottom: 10px; /* Espaçamento abaixo do título */
+}
+
+.no-results p {
+    font-size: 1rem; /* Tamanho do texto explicativo */
+    color: #666; /* Texto em cinza médio */
+    line-height: 1.6; /* Linha mais espaçada para leitura */
+}

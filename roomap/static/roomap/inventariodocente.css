@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    overflow-x: hidden;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;
+    padding: 15px;
+}
+
+.logo {
+    width: 250px;
+    margin-left: 25px;
+}
+
+nav {
+    transform: translate(40%, 10%);
+    width: 100%;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 150px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+.title-container {
+    margin-left: 17%;
+    margin-top: 2%;
+    padding-top: 0.5%;
+}
+
+.room-container {
+    width: 70%; /* Aumenta a largura do container */
+    margin-left: 33vh; /* Centraliza o container horizontalmente */
+    display: flex;
+    flex-direction: column; /* Alinha os cards verticalmente */
+    gap: 30px; /* Maior espaço entre os cards */
+    max-height: 2000px; /* Altura máxima maior */
+    overflow-y: auto; /* Adiciona rolagem vertical, se necessário */
+    padding: 30px 0; /* Espaço extra no topo e na base */
+}
+
+.room-card {
+    width: 100%; /* Aumenta a largura do card */
+    min-height: 300px; /* Aumenta a altura mínima */
+    display: flex;
+    flex-direction: row; /* Mantém a imagem e informações lado a lado */
+    align-items: center;
+    background-color: #000; /* Cor de fundo preta */
+    color: white; /* Texto em branco */
+    padding: 20px; /* Maior espaçamento interno */
+    border-radius: 0px; /* Bordas mais arredondadas */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra mais evidente */
+    gap: 20px; /* Maior espaço entre imagem e texto */
+}
+
+.room-image {
+    width: 300px; /* Aumenta a largura da imagem */
+    height: 300px; /* Aumenta a altura da imagem */
+    border-radius: 0px; /* Bordas arredondadas para combinar com o card */
+    object-fit: cover; /* Ajusta a imagem sem distorção */
+}
+
+.room-info {
+    flex: 1; /* Ocupa o espaço restante */
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Espaçamento maior entre as linhas */
+    text-align: left;
+}
+
+.categorie-info {
+    font-weight: bold;
+    font-size: 1.1rem; /* Aumenta o tamanho do texto das categorias */
+}
+
+
+.room-info button {
+    padding: 15px;
+    margin-left: 80%;
+    width: 27%;
+    background-color: #ec1c24;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transform: translate(-27%, -30%);
+}
+
+.room-info button:hover {
+    background-color: #ff6666;
+}
+
+#linha {
+    width: 99.9%;
+}
+
+
+button {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    text-decoration: none;
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+button.learn-more {
+    width: 12rem;
+    height: auto;
+    transform: translate(169%, -30%);
+}
+
+button.learn-more .circle {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: relative;
+    display: block;
+    margin: 0;
+    width: 3rem;
+    height: 3rem;
+    background: #000000;
+    border-radius: 1.625rem;
+    margin-top:70px;
+}
+
+button.learn-more .circle .icon {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background: #fff;
+}
+
+button.learn-more .circle .icon.arrow {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    left: auto;
+    right: 0.625rem;
+    width: 1.125rem;
+    height: 0.125rem;
+    background: none;
+}
+
+button.learn-more .circle .icon.arrow::before {
+    position: absolute;
+    content: "";
+    top: -0.29rem;
+    left: 0.0625rem;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-top: 0.125rem solid #fff;
+    border-left: 0.125rem solid #fff;
+    transform: rotate(-45deg);
+}
+
+button.learn-more .button-text {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: 1px;
+    left: 0;
+    right: 23%;
+    bottom: 0;
+    padding: 0.71rem 0;
+    margin: 0 0 0 1.85rem;
+    color: #282936;
+    font-weight: 700;
+    line-height: 1.6;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top:70px;
+}
+
+button:hover .circle {
+    width: 100%;
+}
+
+button:hover .circle .icon.arrow {
+    background: #fff;
+    transform: translate(-1rem, 0); /* Ajusta o deslocamento para a esquerda */
+}
+
+button:hover .button-text {
+    color: #fff;
+    margin-top:70px;
+}
+
+.search-container {
+    position: relative;
+    width: 30%;
+    transform: translate(180%, -181%);
+}
+
+.search-bar {
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    color: gray;
+    border-radius: 60px;
+    padding-left: 40px;
+}
+
+.search-container i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: gray;
+}
+
+.add-button-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    transform: translate(-380%,-1180%);
+}
+
+.add-button {
+    width: 50px;
+    height: 50px;
+    background-color: #ec1c24;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+.add-button:hover {
+    background-color: #ff6666;
+}
+
+.no-results {
+    text-align: center;
+    margin: 20px 0; /* Espaçamento no topo e na base */
+    color: #555; /* Cor do texto */
+    font-family: 'Montserrat', sans-serif; /* Mesma fonte usada no resto do layout */
+    padding: 30px; /* Espaçamento interno */
+    border: 2px dashed #ccc; /* Borda estilizada */
+    border-radius: 10px; /* Bordas arredondadas */
+    background-color: #f9f9f9; /* Fundo claro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+.no-results-icon {
+    width: 150px; /* Tamanho do ícone */
+    height: 150px;
+    margin-bottom: 15px; /* Espaço entre o ícone e o título */
+    opacity: 0.8; /* Transparência leve para suavizar */
+}
+
+.no-results h2 {
+    font-size: 1.8rem; /* Tamanho grande para o título */
+    color: #333; /* Cor mais escura */
+    margin-bottom: 10px; /* Espaçamento abaixo do título */
+}
+
+.no-results p {
+    font-size: 1rem; /* Tamanho do texto explicativo */
+    color: #666; /* Texto em cinza médio */
+    line-height: 1.6; /* Linha mais espaçada para leitura */
+}
