@@ -71,7 +71,7 @@ def loginadmin_view(request):
     predefined_email = 'Admin@gmail.com'
     predefined_password = '1234'
 
-    request.session['email'] = predefined_email
+    request.session['nome_adm'] = predefined_email
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -150,9 +150,68 @@ def cadastro_view(request):
     return render(request, 'roomap/cadastro.html', {'form': form})
 
 
+from django.shortcuts import render
+from django.db import connection
+from django.utils.timezone import now
+from .models import Sala
+
 def homedocente_view(request):
+    # Função para deletar reservas expiradas (implementação não mostrada aqui)
+    deletar_reservas_expiradas()
+
+    # Obter a data atual
+    hoje = now().date()
+
+    # Obter o e-mail do docente da sessão
+    email_docente = request.session.get('email')
+    if not email_docente:
+        # Caso o e-mail não esteja na sessão, redirecionar para a página de login
+        return redirect('login')
+
+    # Query SQL para buscar reservas apenas do dia atual para o docente logado
+    query = """
+        SELECT id_reserva, data_hora_inicio, data_hora_fim, status_reserva, email_doc, id_sala
+        FROM reservas
+        WHERE DATE(data_hora_inicio) = %s AND email_doc = %s
+    """
+    with connection.cursor() as cursor:
+        cursor.execute(query, [hoje, email_docente])
+        reservas = cursor.fetchall()
+
+    # Formatar os dados das reservas para uso no template
+    reservas_formatadas = [
+        {
+            'id': reserva[0],
+            'data_hora_inicio': reserva[1],
+            'data_hora_fim': reserva[2],
+            'status_reserva': reserva[3],
+            'email_doc': reserva[4],
+            'id_sala': reserva[5]
+        }
+        for reserva in reservas
+    ]
+
+    # Obter todas as salas do banco de dados
     salas = Sala.objects.all()
-    return render(request, 'roomap/homedocente.html', {'salas': salas})
+
+    # Criar um dicionário para rastrear o status de cada sala
+    salas_status = {}
+    for reserva in reservas_formatadas:
+        id_sala = reserva['id_sala']
+        salas_status[id_sala] = 'reservada'  # Se a sala tem uma reserva, marcamos como 'reservada'
+
+    # Garantir que salas sem reservas sejam marcadas como 'disponível'
+    total_salas = 27  # Atualize conforme o número de salas no banco
+    for id_sala in range(1, total_salas + 1):
+        if id_sala not in salas_status:
+            salas_status[id_sala] = 'disponível'
+
+    # Renderizar o template com os dados
+    return render(request, 'roomap/homedocente.html', {
+        'reservas': reservas_formatadas,  # Dados das reservas do dia atual do docente
+        'salas': salas,                   # Todas as salas
+        'salas_status': salas_status      # Status das salas (reservada ou disponível)
+    })
 
 def homeadmin_view(request):
     salas = Sala.objects.all()
@@ -416,13 +475,19 @@ def salas_view(request):
     salas = Sala.objects.all()
     return render(request, 'roomap/salas.html', {'salas': salas})
 
+from django.db import connection
+from django.shortcuts import render
+
 def mapa_view(request):
     deletar_reservas_expiradas()
 
-    # Query SQL para buscar todas as reservas
+    # Query SQL para buscar todas as reservas (docentes e admin)
     query = """
         SELECT id_reserva, data_hora_inicio, data_hora_fim, status_reserva, email_doc, id_sala
         FROM reservas
+        UNION
+        SELECT id_reserva, data_hora_inicio, data_hora_fim, status_reserva, nome_adm AS email_doc, id_sala
+        FROM reservasadmin
     """
     with connection.cursor() as cursor:
         cursor.execute(query)
@@ -435,7 +500,7 @@ def mapa_view(request):
             'data_hora_inicio': reserva[1],
             'data_hora_fim': reserva[2],
             'status_reserva': reserva[3],
-            'email_doc': reserva[4],
+            'email_doc': reserva[4],  # Aqui pode ser o email do docente ou nome do admin
             'id_sala': reserva[5]
         }
         for reserva in reservas
@@ -460,6 +525,7 @@ def mapa_view(request):
 def deletar_reservas_expiradas():
     agora = datetime.now()
     with connection.cursor() as cursor:
+
         # Excluir todas as reservas onde data_hora_fim já passou
         cursor.execute("DELETE FROM reservas WHERE data_hora_fim < %s", [agora]) # função que deleta as reservas inspiradas.
 

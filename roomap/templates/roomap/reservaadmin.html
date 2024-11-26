@@ -45,7 +45,7 @@
                 <br>
                 <form class="reservation-form" method="POST" action="{% url 'reservaadmin' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="nome_adm" value="{{ request.session.email }}">
+                    <input type="hidden" name="nome_adm" value="{{ request.session.nome_adm }}">
                     <input type="datetime-local" name="data_hora_inicio" placeholder="Data e Hora de Início" required>
                     <input type="datetime-local" name="data_hora_fim" placeholder="Data e Hora de Fim" required>
                     <input type="number" name="id_sala" placeholder="ID da Sala" required>

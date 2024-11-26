@@ -785,3 +785,109 @@ td{
     color: #666; /* Texto em cinza médio */
     line-height: 1.6; /* Linha mais espaçada para leitura */
 }
+
+
+
+
+
+
+/* parte vo botão voltar começo */
+
+
+
+.button_voltar {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #ff0000; /* Verde */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* parte vo botão voltar fim*/
+
+
+/* Estilo geral do modal */
+dialog {
+    width: 40%;
+    max-width: 800px;
+    background-color: #1C1C1C; /* Fundo escuro suave */
+    color: #EAEAEA; /* Texto claro */
+    border: none; /* Remove borda padrão do <dialog> */
+    border-radius: 12px; /* Cantos arredondados */
+    padding: 20px 25px;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.7); /* Sombra para destaque */
+    position: relative;
+    margin-top: 70px;
+    margin-left: 705px;
+}
+
+/* Botão de fechar */
+.wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.wrapper button {
+    background-color: #FF6F61; /* Vermelho suave */
+    color: #FFF;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.wrapper button:hover {
+    background-color: #E85A4F; /* Vermelho mais escuro */
+}
+
+/* Tabela no modal */
+#reservasTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+#reservasTable th, #reservasTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #444; /* Linha divisória discreta */
+}
+
+#reservasTable th {
+    font-weight: bold;
+    color: #FF6F61; /* Cabeçalho em vermelho suave */
+    font-size: 1.1em;
+}
+
+#reservasTable td {
+    color: #EAEAEA; /* Texto das células */
+    font-size: 1em;
+}
+
+/* Animação para exibir o modal */
+dialog[open] {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* parte de dialog fim*/

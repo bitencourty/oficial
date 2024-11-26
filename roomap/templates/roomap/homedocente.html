@@ -96,7 +96,7 @@
             <a class="front text" href="{% url 'mapa' %}">Visualizar Mapa Geral</a>
         </button>
 
-        <button id="btn-agenda">Agenda Diária</button>
+        <button id="btn-agenda"  onclick="modal.showModal()">Agenda Diária</button>
     </main>
 
     <div class="carousel-container">
@@ -148,6 +148,38 @@
         {% endif %}
     </div>
 
+
+
+
+    <dialog id="modal">
+        <div class="wrapper">
+            <button onclick="modal.close()">Fechar</button>
+        </div>
+        <h2>Agenda Diária</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Local</th>
+                    <th>Início</th>
+                    <th>Fim</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reserva in reservas %}
+                    <tr>
+                        <td>{{ reserva.id_sala }}</td>
+                        <td>{{ reserva.data_hora_inicio|time }}</td>
+                        <td>{{ reserva.data_hora_fim|time }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">Nenhuma reserva para hoje.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </dialog>
+
     <script>
         // Script do carousel
         const carouselWrapper = document.querySelector(".carousel-wrapper");
@@ -172,6 +204,52 @@
                     room.style.display = 'none'; // Esconde a sala
                 }
             });
+        }
+    </script>
+
+
+<script>
+        const tabelas = [
+        {% for tabela in tabelas %}
+            {
+                email_doc: "{{ tabela.email_doc }}",
+                data_hora_inicio: "{{ tabela.data_hora_inicio }}",
+                data_hora_fim: "{{ tabela.data_hora_fim }}",
+                status_reserva: "{{ tabela.status_reserva }}",
+                id_sala: {{ tabela.id_sala }}
+            },
+        {% endfor %}
+        ];
+
+        // Função para exibir reservas filtradas pela sala
+        function exibirReservasPorSala(salaId) {
+            const tabelaBody = document.querySelector("#reservasTable tbody");
+            tabelaBody.innerHTML = ""; // Limpar a tabela antes de adicionar as novas linhas
+
+            // Filtrar as reservas que correspondem ao id_sala passado como parâmetro
+            const reservasFiltradas = tabelas.filter(tabela => tabela.id_sala == salaId);
+
+            // Verifica se há reservas para a sala
+            if (reservasFiltradas.length > 0) {
+                reservasFiltradas.forEach(reserva => {
+                    // Criar uma nova linha na tabela para cada reserva filtrada
+                    const novaLinha = document.createElement("tr");
+
+                    novaLinha.innerHTML = `
+                        <td>${reserva.email_doc}</td>
+                        <td>${reserva.data_hora_inicio}</td>
+                        <td>${reserva.data_hora_fim}</td>
+                        <td>${reserva.status_reserva}</td>
+                    `;
+
+                    tabelaBody.appendChild(novaLinha); // Adiciona a linha na tabela
+                });
+            } else {
+                // Caso não haja reservas, exibe uma mensagem
+                const novaLinha = document.createElement("tr");
+                novaLinha.innerHTML = `<td colspan="4" style="text-align: center;">Nenhuma reserva encontrada.</td>`;
+                tabelaBody.appendChild(novaLinha);
+            }
         }
     </script>
 </body>
