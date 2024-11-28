@@ -21,7 +21,7 @@ class Reserva(models.Model):
     data_hora_fim = models.DateTimeField()
     status_reserva = models.CharField(max_length=15)
     email_doc = models.EmailField()
-    sala = models.ForeignKey('Sala', on_delete=models.CASCADE)  # Chave estrangeira
+    sala = models.ForeignKey('Sala', on_delete=models.CASCADE, db_column='id_sala')  # Define explicitamente o nome da coluna no banco
 
     class Meta:
         db_table = 'reservas'
@@ -100,7 +100,7 @@ class ReservaUltimaSemanaAdmin(models.Model):
 
 class ReservaUltimaSemanaDocente(models.Model):
     id_reserva = models.IntegerField(primary_key=True)
-    nome_doc = models.CharField(max_length=100)
+    email_doc = models.CharField(max_length=100)
     data_hora_inicio = models.DateTimeField()
     data_hora_fim = models.DateTimeField()
     status_reserva = models.CharField(max_length=15)

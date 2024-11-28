@@ -787,7 +787,7 @@ def relatorio_docente(request):
         return HttpResponse(mensagem)
 
     # Filtrar reservas utilizando a view MySQL e o email do docente
-    reservas = ReservaUltimaSemanaDocente.objects.filter(nome_doc=email_logado)
+    reservas = ReservaUltimaSemanaDocente.objects.filter(email_doc=email_logado)
 
     if not reservas.exists():
         mensagem = """
@@ -965,8 +965,30 @@ def reservadocente_view(request):
     email_doc = request.session.get('email', '')
     return render(request, 'roomap/reservadocente.html')
 
+from django.shortcuts import render
+from django.utils.dateformat import format
+from .models import Reserva
+
 def agenda_view(request):
-    return render(request, 'roomap/agenda.html')
+    # Recupera todas as reservas
+    reservas = Reserva.objects.select_related('sala').all()
+
+    # Serializa os eventos para o calendário
+    eventos = [
+        {
+            "title": f"Sala: {reserva.sala.nome_sala}",
+            "start": reserva.data_hora_inicio.strftime('%Y-%m-%dT%H:%M:%S'),
+            "end": reserva.data_hora_fim.strftime('%Y-%m-%dT%H:%M:%S'),
+            "status": reserva.status_reserva,
+            "sala": reserva.sala.nome_sala,
+            "docente": reserva.email_doc,
+        }
+        for reserva in reservas
+    ]
+    print(eventos)
+
+    # Renderiza o template com os eventos
+    return render(request, 'roomap/agenda.html', {"eventos": eventos})
 
 def reservaadmin_view(request):
     if request.method == 'POST':
@@ -1051,17 +1073,29 @@ def excluir_maquina(request, id_equip):
     return redirect('inventarioadmin')
 
 def excluir_docente(request, id_doc):
-
+    # Obtém o docente pelo ID ou retorna 404 caso não seja encontrado
     docente = get_object_or_404(Docente, id_doc=id_doc)
 
-    if Reserva.objects.filter(email_doc=docente.email_doc).exists():
-        messages.error(
-            request,
-            f"Não é possível excluir o docente {docente.nome_doc}, pois ele possui reservas ativas."
-        )
-        return redirect('listafuncionarios')
+    # Exclui todas as reservas associadas ao docente antes de excluí-lo
+    reservas_excluidas = Reserva.objects.filter(email_doc=docente.email_doc).delete()
 
-    # Caso não tenha reservas, exclui o docente
+    # Exclui o registro de validação associado ao docente
+    with connection.cursor() as cursor:
+        cursor.execute("DELETE FROM validacao WHERE email = %s", [docente.email_doc])
+
+    # Exclui o docente
     docente.delete()
-    messages.success(request, f"Docente {docente.nome_doc} foi excluído com sucesso!")
+
+    # Mensagens de feedback ao usuário
+    if reservas_excluidas[0] > 0:
+        messages.success(
+            request,
+            f"Docente {docente.nome_doc} e suas {reservas_excluidas[0]} reservas foram excluídos com sucesso!"
+        )
+    else:
+        messages.success(
+            request,
+            f"Docente {docente.nome_doc} foi excluído com sucesso!"
+        )
+
     return redirect('listafuncionarios')
