@@ -210,9 +210,62 @@ def homedocente_view(request):
     })
 
 def homeadmin_view(request):
-    salas = Sala.objects.all()
-    return render(request, 'roomap/homeadmin.html', {'salas': salas})
+    # Função para deletar reservas expiradas (implementação não mostrada aqui)
+    deletar_reservas_expiradas()
 
+    # Obter a data atual
+    hoje = now().date()
+
+    # Obter o nome do administrador da sessão
+    nome_adm = request.session.get('nome_adm')
+    if not nome_adm:
+        # Caso o nome do admin não esteja na sessão, redirecionar para a página de login
+        return redirect('loginadmin')
+
+    # Query SQL para buscar reservas apenas do dia atual para o administrador logado
+    query = """
+        SELECT id_reserva, data_hora_inicio, data_hora_fim, status_reserva, nome_adm, id_sala
+        FROM reservasadmin
+        WHERE DATE(data_hora_inicio) = %s AND nome_adm = %s
+    """
+    with connection.cursor() as cursor:
+        cursor.execute(query, [hoje, nome_adm])
+        reservas = cursor.fetchall()
+
+    # Formatar os dados das reservas para uso no template
+    reservas_formatadas = [
+        {
+            'id': reserva[0],
+            'data_hora_inicio': reserva[1],
+            'data_hora_fim': reserva[2],
+            'status_reserva': reserva[3],
+            'nome_adm': reserva[4],
+            'id_sala': reserva[5]
+        }
+        for reserva in reservas
+    ]
+
+    # Obter todas as salas do banco de dados
+    salas = Sala.objects.all()
+
+    # Criar um dicionário para rastrear o status de cada sala
+    salas_status = {}
+    for reserva in reservas_formatadas:
+        id_sala = reserva['id_sala']
+        salas_status[id_sala] = 'reservada'  # Se a sala tem uma reserva, marcamos como 'reservada'
+
+    # Garantir que salas sem reservas sejam marcadas como 'disponível'
+    total_salas = 27  # Atualize conforme o número de salas no banco
+    for id_sala in range(1, total_salas + 1):
+        if id_sala not in salas_status:
+            salas_status[id_sala] = 'disponível'
+
+    # Renderizar o template com os dados
+    return render(request, 'roomap/homeadmin.html', {
+        'reservas': reservas_formatadas,  # Dados das reservas do dia atual do admin
+        'salas': salas,                   # Todas as salas
+        'salas_status': salas_status      # Status das salas (reservada ou disponível)
+    })
 def reserva_sala_view(request):
     # Obtém o ID da sala a partir da URL
     sala_id = request.GET.get('sala_id')

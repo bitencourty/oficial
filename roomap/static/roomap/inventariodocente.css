@@ -18,108 +18,125 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: #000;
-    padding: 15px;
+    padding: 1vh;
+    width: 100%;
+    z-index: 10; /* Garante que o header fique acima de outros elementos */
+    position: relative; /* Permite que o header não seja sobreposto */
 }
 
 .logo {
-    width: 250px;
-    margin-left: 25px;
+    width: 15vw;
+    margin-left: 3vw;
 }
 
 nav {
-    transform: translate(40%, 10%);
+    transform: translate(15%, 10%);
     width: 100%;
 }
 
 nav ul {
     list-style: none;
     display: flex;
-    gap: 150px;
+    gap: 14.56vw;
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
-    font-weight: bold;
-    font-size: 20px;
+    font-size: 1.2vw;
+    cursor: pointer; /* Garante que o cursor indique um link clicável */
 }
 
 nav ul li a:hover {
     text-decoration: underline;
 }
-
 .title-container {
-    margin-left: 17%;
     margin-top: 2%;
+    margin: 3rem 9.8rem;
     padding-top: 0.5%;
+    margin-bottom:-3.5%;
+    font-size: 1.1vw;
 }
 
 .room-container {
-    width: 70%; /* Aumenta a largura do container */
-    margin-left: 33vh; /* Centraliza o container horizontalmente */
+    width: 70%;
+    margin-left: 26vh;
     display: flex;
-    flex-direction: column; /* Alinha os cards verticalmente */
-    gap: 30px; /* Maior espaço entre os cards */
-    max-height: 2000px; /* Altura máxima maior */
-    overflow-y: auto; /* Adiciona rolagem vertical, se necessário */
-    padding: 30px 0; /* Espaço extra no topo e na base */
+    flex-direction: column;
+    gap: 30px;
+    max-height: 2000px;
+    padding: 30px 0;
 }
 
 .room-card {
-    width: 100%; /* Aumenta a largura do card */
-    min-height: 300px; /* Aumenta a altura mínima */
+    width: 157vh;
+    min-height: 300px;
     display: flex;
-    flex-direction: row; /* Mantém a imagem e informações lado a lado */
+    flex-direction: row;
     align-items: center;
-    background-color: #000; /* Cor de fundo preta */
-    color: white; /* Texto em branco */
-    padding: 20px; /* Maior espaçamento interno */
-    border-radius: 0px; /* Bordas mais arredondadas */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra mais evidente */
-    gap: 20px; /* Maior espaço entre imagem e texto */
+    background-color: #000;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    gap: 20px;
 }
 
 .room-image {
-    width: 300px; /* Aumenta a largura da imagem */
-    height: 300px; /* Aumenta a altura da imagem */
-    border-radius: 0px; /* Bordas arredondadas para combinar com o card */
-    object-fit: cover; /* Ajusta a imagem sem distorção */
+    width: 320px;
+    height: 330px;
+    border-radius: 10px 0 0 10px;
+    object-fit: cover;
 }
 
 .room-info {
-    flex: 1; /* Ocupa o espaço restante */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 30px; /* Espaçamento maior entre as linhas */
+    gap: 30px;
     text-align: left;
+    margin-top: 6vh;
 }
 
 .categorie-info {
     font-weight: bold;
-    font-size: 1.1rem; /* Aumenta o tamanho do texto das categorias */
+    font-size: 1.1rem;
 }
 
 
-.room-info button {
-    padding: 15px;
-    margin-left: 80%;
-    width: 27%;
+#linha {
+    width: 99.9%; /* Linha ocupa 100% do espaço disponível no conteúdo */
+}
+
+.room-info a {
+    padding: 0rem;
+    margin-left: 36vw;
+    width: 25%;
+    height: 6.5vh;
     background-color: #ec1c24;
     border: none;
     color: white;
     cursor: pointer;
     font-weight: bold;
-    transform: translate(-27%, -30%);
+    font-size: 1.2vw;
+    display: inline-block; /* Permite definir dimensões no <a> */
+    text-align: center; /* Centraliza o conteúdo */
+    text-decoration: none; /* Remove o sublinhado do link */
+    line-height: 6.5vh; /* Alinha o texto verticalmente */
+    transform: translate(-27%, -60%);
 }
 
-.room-info button:hover {
-    background-color: #ff6666;
+.room-info a:hover {
+    background-color: #ff6666; /* Muda a cor do fundo ao passar o mouse */
+}
+
+/* Garante que o <a> tenha o comportamento de um botão */
+.room-info a:active {
+    transform: translate(-27%, -60%) scale(0.98); /* Efeito de clique */
 }
 
 #linha {
-    width: 99.9%;
+    width: 99.9%; /* Linha ocupa 100% do espaço disponível no conteúdo */
 }
-
 
 button {
     position: relative;
@@ -138,7 +155,10 @@ button {
 button.learn-more {
     width: 12rem;
     height: auto;
-    transform: translate(169%, -30%);
+    margin-left: 12.2vw;
+    margin-bottom:-10vh;
+    margin-top:6vh;
+    transform: translate(-0%, 2%);
 }
 
 button.learn-more .circle {
@@ -150,7 +170,7 @@ button.learn-more .circle {
     height: 3rem;
     background: #000000;
     border-radius: 1.625rem;
-    margin-top:70px;
+    margin-top: 5vh;
 }
 
 button.learn-more .circle .icon {
@@ -186,9 +206,9 @@ button.learn-more .circle .icon.arrow::before {
 button.learn-more .button-text {
     transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
     position: absolute;
-    top: 1px;
+    top: 1vw;
     left: 0;
-    right: 23%;
+    right: 3.2vw;
     bottom: 0;
     padding: 0.71rem 0;
     margin: 0 0 0 1.85rem;
@@ -197,7 +217,8 @@ button.learn-more .button-text {
     line-height: 1.6;
     text-align: center;
     text-transform: uppercase;
-    margin-top:70px;
+    margin-top: 3vh;
+    font-size: 1.26vw;
 }
 
 button:hover .circle {
@@ -211,37 +232,41 @@ button:hover .circle .icon.arrow {
 
 button:hover .button-text {
     color: #fff;
-    margin-top:70px;
+    margin-top: 3vh;
+    font-size: 1.26vw;
 }
 
 .search-container {
     position: relative;
-    width: 30%;
-    transform: translate(180%, -181%);
+    width: 40%; /* Ajuste conforme necessário */
+    margin: 1rem auto;
+    transform: translate(44%, -15%);
 }
 
 .search-bar {
-    padding: 10px;
+    padding: 0.8rem;
     width: 100%;
-    font-size: 16px;
+    height:auto;
+    font-size: 1.3vw;
     color: gray;
-    border-radius: 60px;
-    padding-left: 40px;
+    border-color: #000;
+    border-radius: 1.5rem;
+    padding-left: 3vw; /* Ajuste o padding para dar espaço ao ícone */
 }
 
 .search-container i {
     position: absolute;
-    left: 10px;
-    top: 50%;
+    left: 1vw; /* Ajuste conforme necessário */
+    top: 3.8vh;
     transform: translateY(-50%);
     color: gray;
 }
 
 .add-button-container {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    transform: translate(-380%,-1180%);
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    transform: translate(-290%, -701%);
 }
 
 .add-button {
@@ -254,9 +279,13 @@ button:hover .button-text {
     font-size: 24px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* Centraliza o conteúdo do botão */
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease; /* Adiciona uma transição suave */
+    position: fixed; /* Mantém a posição fixa */
+    bottom: 2rem; /* Distância do fundo */
+    right: 2rem; /* Distância da direita */
     text-decoration: none;
 }
 
