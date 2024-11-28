@@ -15,31 +15,33 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: #000;
-    padding: 15px;
+    padding: 1vh;
+    width: 100%;
+    z-index: 10; /* Garante que o header fique acima de outros elementos */
+    position: relative; /* Permite que o header não seja sobreposto */
 }
 
-
 .logo {
-    width: 250px;
-    margin-left: 25px;
+    width: 15vw;
+    margin-left: 3vw;
 }
 
 nav {
-    transform: translate(26%, 10%);
+    transform: translate(15%, 10%);
     width: 100%;
 }
 
 nav ul {
     list-style: none;
     display: flex;
-    gap: 150px;
+    gap: 9vw;
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
-    font-weight: bold;
-    font-size: 20px;
+    font-size: 1.2vw;
+    cursor: pointer; /* Garante que o cursor indique um link clicável */
 }
 
 nav ul li a:hover {

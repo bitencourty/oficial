@@ -2,13 +2,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from django.http import HttpResponse
+from django.utils.timezone import now
 from mysql.connector import errorcode
 import mysql.connector
-from .models import (Reserva, Reservaadm, Equipamento, Docente, Sala, SalaView, ViewDadosDocentes,
-                     ReservaUltimaSemanaAdmin, ReservaUltimaSemanaDocente, ReservaDiaAtualAdmin)
+from .models import (
+    Reserva, Reservaadm, Equipamento, Docente, Sala, SalaView, ViewDadosDocentes,
+    ReservaUltimaSemanaAdmin, ReservaUltimaSemanaDocente, ReservaDiaAtualAdmin, Turno)
 from django.contrib.auth.models import User
 from .forms import DocenteForm
-from django.db import connection
+from django.db import connection, transaction
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
@@ -17,6 +19,7 @@ from datetime import datetime
 import json
 from django.http import JsonResponse
 from django.core.mail import send_mail
+
 
 def inicio_view(request):
     if request.method == 'POST':
@@ -50,7 +53,6 @@ def login_view(request):
             if valid_user:
                 # Armazena o e-mail na sessão para identificar o usuário logado
                 request.session['email'] = valid_user['email']
-
 
                 # Mensagem de sucesso e redirecionamento
                 messages.success(request, f"Bem-vindo, {email}!")
@@ -149,12 +151,6 @@ def cadastro_view(request):
 
     return render(request, 'roomap/cadastro.html', {'form': form})
 
-
-from django.shortcuts import render
-from django.db import connection
-from django.utils.timezone import now
-from .models import Sala
-
 def homedocente_view(request):
     # Função para deletar reservas expiradas (implementação não mostrada aqui)
     deletar_reservas_expiradas()
@@ -223,7 +219,6 @@ def reserva_sala_view(request):
 
     # Busca os dados da sala específica na view do MySQL
     sala = get_object_or_404(SalaView, id_sala=sala_id)
-
     # Renderiza o template com os dados da sala
     return render(request, 'roomap/reservaadmin.html', {'sala': sala})
 
@@ -475,9 +470,6 @@ def salas_view(request):
     salas = Sala.objects.all()
     return render(request, 'roomap/salas.html', {'salas': salas})
 
-from django.db import connection
-from django.shortcuts import render
-
 def mapa_view(request):
     deletar_reservas_expiradas()
 
@@ -525,7 +517,6 @@ def mapa_view(request):
 def deletar_reservas_expiradas():
     agora = datetime.now()
     with connection.cursor() as cursor:
-
         # Excluir todas as reservas onde data_hora_fim já passou
         cursor.execute("DELETE FROM reservas WHERE data_hora_fim < %s", [agora]) # função que deleta as reservas inspiradas.
 
@@ -924,57 +915,100 @@ def reservadocente_view(request):
 def agenda_view(request):
     return render(request, 'roomap/agenda.html')
 
-
 def reservaadmin_view(request):
     if request.method == 'POST':
+        # Captura os dados enviados pelo formulário
         nome_adm = request.POST.get('nome_adm')
-        if not nome_adm:
-            messages.error(request, "O e-mail não foi encontrado. Faça login novamente.")
-            return redirect('loginadmin')  # Redireciona para a página de login
+        turno_id = request.POST.get('turno')
         data_hora_inicio = request.POST.get('data_hora_inicio')
         data_hora_fim = request.POST.get('data_hora_fim')
         id_sala = request.POST.get('id_sala')
 
-        status_reserva = 'Confirmada'
+        # Verifica se os campos obrigatórios foram preenchidos
+        if not (nome_adm and turno_id and data_hora_inicio and data_hora_fim and id_sala):
+            messages.error(request, "Todos os campos são obrigatórios.")
+            return redirect('reservaadmin')
 
+        # Busca o turno selecionado
+        turno = get_object_or_404(Turno, id_turno=turno_id)
+
+        # Converte os horários para validação
         try:
-            # Conectar ao banco de dados
+            horario_inicio = datetime.strptime(data_hora_inicio, "%Y-%m-%dT%H:%M").time()
+            horario_fim = datetime.strptime(data_hora_fim, "%Y-%m-%dT%H:%M").time()
+        except ValueError:
+            messages.error(request, "Os horários inseridos são inválidos.")
+            return redirect('reservaadmin')
+
+        # Valida se os horários da reserva estão dentro do turno selecionado
+        if not (turno.horario_inicio <= horario_inicio < horario_fim <= turno.horario_fim):
+            messages.error(request, "Os horários não correspondem ao turno selecionado.")
+            return redirect('reservaadmin')
+
+        # Verifica se há conflitos de reservas no mesmo horário e sala
+        conflitos = Reservaadm.objects.filter(
+            sala=id_sala,
+            data_hora_inicio__lt=data_hora_fim,
+            data_hora_fim__gt=data_hora_inicio
+        )
+        if conflitos.exists():
+            conflito = conflitos.first()
+            messages.error(request, f"Conflito com reserva existente: {conflito.data_hora_inicio} - {conflito.data_hora_fim}.")
+            return redirect('reservaadmin')
+
+        # Realiza a reserva no banco de dados
+        try:
             db_connection = mysql.connector.connect(
                 host='localhost',
                 user='tecmysql',
                 password='devmysql',
                 database='roomap'
             )
-            print("Conexão realizada com sucesso!")
-
             cursor = db_connection.cursor()
 
             sql = """
-                    INSERT INTO reservasadmin (data_hora_inicio, data_hora_fim, status_reserva, nome_adm, id_sala) 
-                    VALUES (%s, %s, %s, %s, %s)
-                """
-            reservas = (data_hora_inicio, data_hora_fim, status_reserva, nome_adm, id_sala)
-
+                INSERT INTO reservasadmin (data_hora_inicio, data_hora_fim, status_reserva, nome_adm, id_sala, turno_id) 
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """
+            reservas = (data_hora_inicio, data_hora_fim, 'Confirmada', nome_adm, id_sala, turno_id)
             cursor.execute(sql, reservas)
-
             db_connection.commit()
-            print("Registro inserido!")
-            messages.success(request, 'Reserva feita com sucesso!')
 
+            messages.success(request, 'Reserva feita com sucesso!')
             return redirect('homeadmin')
 
         except mysql.connector.Error as error:
-            if error.errno == errorcode.ER_BAD_DB_ERROR:
-                return HttpResponse("Erro: O banco de dados não existe.")
-            elif error.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                return HttpResponse("Erro: Nome de usuário ou senha incorretos.")
-            else:
-                return HttpResponse(f"Erro desconhecido: {error}")
-
+            messages.error(request, f"Erro no banco de dados: {error}")
         finally:
             if 'db_connection' in locals() and db_connection.is_connected():
                 cursor.close()
                 db_connection.close()
-                print("Conexão encerrada.")
 
-    return render(request, 'roomap/reservaadmin.html')
+    # Carrega os turnos e dados da sala para exibição no formulário
+    turnos = Turno.objects.all()
+
+    sala_id = request.GET.get('sala_id')
+
+    sala = get_object_or_404(SalaView, id_sala=sala_id)
+    return render(request, 'roomap/reservaadmin.html', {'turnos': turnos, 'sala': sala})
+
+def excluir_maquina(request, id_equip):
+    equipamento = get_object_or_404(Equipamento, id_equip=id_equip)  # Altere para usar 'id_doc'
+    equipamento.delete()  # Deleta o docente do banco de dados
+    return redirect('inventarioadmin')
+
+def excluir_docente(request, id_doc):
+
+    docente = get_object_or_404(Docente, id_doc=id_doc)
+
+    if Reserva.objects.filter(email_doc=docente.email_doc).exists():
+        messages.error(
+            request,
+            f"Não é possível excluir o docente {docente.nome_doc}, pois ele possui reservas ativas."
+        )
+        return redirect('listafuncionarios')
+
+    # Caso não tenha reservas, exclui o docente
+    docente.delete()
+    messages.success(request, f"Docente {docente.nome_doc} foi excluído com sucesso!")
+    return redirect('listafuncionarios')

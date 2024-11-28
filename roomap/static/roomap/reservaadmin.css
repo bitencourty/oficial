@@ -85,7 +85,7 @@ nav ul li a:hover {
     margin-top: 25px;
 }
 
-.right-column input{
+.right-column input, select{
     width: 70%;
     opacity: 100%;
     color: #ffffff;
@@ -100,6 +100,11 @@ nav ul li a:hover {
 
 form input::placeholder {
     color: #ffffff;
+    opacity: 1;
+}
+
+option {
+    color: #000000;
     opacity: 1;
 }
 

@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Sala(models.Model):
     id_sala = models.IntegerField(primary_key=True)
     nome_sala = models.CharField(max_length=100)
@@ -19,25 +20,29 @@ class Reserva(models.Model):
     data_hora_inicio = models.DateTimeField()
     data_hora_fim = models.DateTimeField()
     status_reserva = models.CharField(max_length=15)
-    nome_doc = models.CharField(max_length=100)
-    sala = models.ForeignKey(Sala, on_delete=models.CASCADE)
+    email_doc = models.EmailField()
+    sala = models.ForeignKey('Sala', on_delete=models.CASCADE)  # Chave estrangeira
+
+    class Meta:
+        db_table = 'reservas'
 
     def __str__(self):
-        return f'Reserva {self.id_reserva} - {self.nome_doc}'
+        return f'Reserva {self.id_reserva} - {self.email_doc}'
 
 class Reservaadm(models.Model):
-    id_reserva = models.AutoField(primary_key=True)  # auto_increment
+    id_reserva = models.AutoField(primary_key=True)
     data_hora_inicio = models.DateTimeField()
     data_hora_fim = models.DateTimeField()
     status_reserva = models.CharField(max_length=15)
     nome_adm = models.CharField(max_length=100)
-    sala = models.IntegerField(db_column='id_sala')  # Mapear explicitamente para a coluna id_sala
+    sala = models.IntegerField(db_column='id_sala')
+    turno = models.ForeignKey('Turno', on_delete=models.CASCADE)  # Relaciona a tabela de turnos
 
     class Meta:
-        db_table = 'reservasadmin'  # Nome da tabela no banco de dados
+        db_table = 'reservasadmin'
 
     def __str__(self):
-        return f'Reserva {self.id_reserva} - {self.nome_adm}'
+        return f"Reserva {self.id_reserva} - {self.nome_adm} - {self.turno.nome_turno}"
 
 
 class Docente(models.Model):
@@ -137,3 +142,17 @@ class ReservaDiaAtualAdmin(models.Model):
 
     def __str__(self):
         return f"{self.nome_sala} ({self.data_hora_inicio} - {self.data_hora_fim})"
+
+class Turno(models.Model):
+    id_turno = models.AutoField(primary_key=True)
+    nome_turno = models.CharField(max_length=50)
+    horario_inicio = models.TimeField()
+    horario_fim = models.TimeField()
+
+    class Meta:
+        db_table = 'turnos'
+        managed = False
+
+    def __str__(self):
+        return f"{self.nome_turno} ({self.horario_inicio} - {self.horario_fim})"
+

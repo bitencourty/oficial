@@ -59,48 +59,47 @@ nav ul li a:hover {
 }
 
 .room-container {
-    width: 70%; /* Aumenta a largura do container */
-    margin-left: 33vh; /* Centraliza o container horizontalmente */
+    width: 70%;
+    margin-left: 26vh;
     display: flex;
-    flex-direction: column; /* Alinha os cards verticalmente */
-    gap: 30px; /* Maior espaço entre os cards */
-    max-height: 2000px; /* Altura máxima maior */
-    overflow-y: auto; /* Adiciona rolagem vertical, se necessário */
-    padding: 30px 0; /* Espaço extra no topo e na base */
+    flex-direction: column;
+    gap: 30px;
+    max-height: 2000px;
+    padding: 30px 0;
 }
 
 .room-card {
-    width: 100%; /* Aumenta a largura do card */
-    min-height: 300px; /* Aumenta a altura mínima */
+    width: 157vh;
+    min-height: 300px;
     display: flex;
-    flex-direction: row; /* Mantém a imagem e informações lado a lado */
+    flex-direction: row;
     align-items: center;
-    background-color: #000; /* Cor de fundo preta */
-    color: white; /* Texto em branco */
-    padding: 20px; /* Maior espaçamento interno */
-    border-radius: 0px; /* Bordas mais arredondadas */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra mais evidente */
-    gap: 20px; /* Maior espaço entre imagem e texto */
+    background-color: #000;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    gap: 20px;
 }
 
 .room-image {
-    width: 300px; /* Aumenta a largura da imagem */
-    height: 300px; /* Aumenta a altura da imagem */
-    border-radius: 0px; /* Bordas arredondadas para combinar com o card */
-    object-fit: cover; /* Ajusta a imagem sem distorção */
+    width: 320px;
+    height: 330px;
+    border-radius: 10px 0 0 10px;
+    object-fit: cover;
 }
 
 .room-info {
-    flex: 1; /* Ocupa o espaço restante */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 30px; /* Espaçamento maior entre as linhas */
+    gap: 30px;
     text-align: left;
+    margin-top: 6vh;
 }
 
 .categorie-info {
     font-weight: bold;
-    font-size: 1.1rem; /* Aumenta o tamanho do texto das categorias */
+    font-size: 1.1rem;
 }
 
 
@@ -108,21 +107,31 @@ nav ul li a:hover {
     width: 99.9%; /* Linha ocupa 100% do espaço disponível no conteúdo */
 }
 
-.room-info button {
-    padding: 0.5rem;
-    margin-left: 34.2vw;
+.room-info a {
+    padding: 0rem;
+    margin-left: 36vw;
     width: 25%;
+    height: 6.5vh;
     background-color: #ec1c24;
     border: none;
     color: white;
     cursor: pointer;
     font-weight: bold;
     font-size: 1.2vw;
-    transform: translate(-27%, -30%);
+    display: inline-block; /* Permite definir dimensões no <a> */
+    text-align: center; /* Centraliza o conteúdo */
+    text-decoration: none; /* Remove o sublinhado do link */
+    line-height: 6.5vh; /* Alinha o texto verticalmente */
+    transform: translate(-27%, -60%);
 }
 
-.room-info button:hover {
-    background-color: #ff6666;
+.room-info a:hover {
+    background-color: #ff6666; /* Muda a cor do fundo ao passar o mouse */
+}
+
+/* Garante que o <a> tenha o comportamento de um botão */
+.room-info a:active {
+    transform: translate(-27%, -60%) scale(0.98); /* Efeito de clique */
 }
 
 #linha {

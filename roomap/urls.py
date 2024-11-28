@@ -5,8 +5,8 @@ from .views import (
     homedocente_view, homeadmin_view,
     reservaadmin_view, reservadocente_view, reserva_sala_view, reserva_sala_view_docente, deletar_reservas_expiradas,
     reservas_do_dia_docente, reservas_do_dia_admin,
-    inventariodocente_view, inventarioadmin_view,
-    listafuncionarios_view, addmaquina_view, addfuncionario_view,
+    inventariodocente_view, inventarioadmin_view, excluir_maquina,
+    listafuncionarios_view, addmaquina_view, addfuncionario_view, excluir_docente,
     perfil_view, editarperfil_view,
     agenda_view, agendaadmin_view,
     salas_view, mapa_view,
@@ -28,7 +28,7 @@ urlpatterns = [
     # Reservas
     path('reservaadmin/', reservaadmin_view, name='reservaadmin'),
     path('reservadocente/', reservadocente_view, name='reservadocente'),
-    path('reservasala/', reserva_sala_view, name='reservasala'),
+    path('reservasala/', reservaadmin_view, name='reservasala'),
     path('reservasaladocente/', reserva_sala_view_docente, name='reservasaladocente'),
     path('reservasdiadocente/', reservas_do_dia_docente, name='reservasdiadocente'),
     path('reservasdiaadm/', reservas_do_dia_admin, name='reservasdiaadm'),
@@ -38,10 +38,12 @@ urlpatterns = [
     path('inventariodocente/', inventariodocente_view, name='inventariodocente'),
     path('inventarioadmin/', inventarioadmin_view, name='inventarioadmin'),
     path('addmaquina/', addmaquina_view, name='addmaquina'),
+    path('delete_maquina/<int:id_equip>/', excluir_maquina, name='delete_maquina'),
 
     # Funcionários
     path('listafuncionarios/', listafuncionarios_view, name='listafuncionarios'),
     path('addfuncionario/', addfuncionario_view, name='addfuncionario'),
+    path('delete_docente/<int:id_doc>/', excluir_docente, name='delete_docente'),
 
     # Perfil
     path('perfil/', perfil_view, name='perfil'),

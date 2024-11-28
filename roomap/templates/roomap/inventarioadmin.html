@@ -60,6 +60,7 @@
                     <p><span class="categorie-info">Setor:</span> {{ equipamento.loc_equip }}</p>
                     <p><span class="categorie-info">Quantidade Disponível:</span> {{ equipamento.quant_equip }}</p>
                     <p><span class="categorie-info">Descrição:</span>  {{ equipamento.desc_equip }}</p>
+                     <a class=excluirbtn href="{% url 'delete_maquina' equipamento.id_equip %}">Excluir</a>
                 </div>
             </div>
         {% endfor %}

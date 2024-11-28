@@ -60,7 +60,7 @@
                     <p><span class="categorie-info">Cargo:</span> {{ docente.cargo_doc }}</p>
                     <p><span class="categorie-info">Email:</span> {{ docente.email_doc }}</p>
                     <p><span class="categorie-info">Telefone:</span> {{ docente.tel_doc }}</p>
-                     <button class="excluirBtn">Excluir</button>
+                     <a class=excluirbtn href="{% url 'delete_docente' docente.id_doc %}">Excluir</a>
                 </div>
             </div>
         {% endfor %}

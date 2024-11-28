@@ -18,8 +18,10 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: #000;
-    padding: 0.2vw;
+    padding: 1vh;
     width: 100%;
+    z-index: 10; /* Garante que o header fique acima de outros elementos */
+    position: relative; /* Permite que o header não seja sobreposto */
 }
 
 .logo {
@@ -42,6 +44,7 @@ nav ul li a {
     color: white;
     text-decoration: none;
     font-size: 1.2vw;
+    cursor: pointer; /* Garante que o cursor indique um link clicável */
 }
 
 nav ul li a:hover {
@@ -58,47 +61,47 @@ nav ul li a:hover {
 }
 
 .room-container {
-    width: 70%; /* Aumenta a largura do container */
-    margin-left: 26vh; /* Centraliza o container horizontalmente */
+    width: 70%;
+    margin-left: 26vh;
     display: flex;
-    flex-direction: column; /* Alinha os cards verticalmente */
-    gap: 30px; /* Maior espaço entre os cards */
-    max-height: 2000px; /* Altura máxima maior */
-    padding: 30px 0; /* Espaço extra no topo e na base */
+    flex-direction: column;
+    gap: 30px;
+    max-height: 2000px;
+    padding: 30px 0;
 }
 
 .room-card {
-    width: 157vh; /* Aumenta a largura do card */
-    min-height: 300px; /* Aumenta a altura mínima */
+    width: 157vh;
+    min-height: 300px;
     display: flex;
-    flex-direction: row; /* Mantém a imagem e informações lado a lado */
+    flex-direction: row;
     align-items: center;
-    background-color: #000; /* Cor de fundo preta */
-    color: white; /* Texto em branco */
-    padding: 20px; /* Maior espaçamento interno */
-    border-radius: 10px; /* Bordas mais arredondadas */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra mais evidente */
-    gap: 20px; /* Maior espaço entre imagem e texto */
+    background-color: #000;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    gap: 20px;
 }
 
 .room-image {
-    width: 300px; /* Aumenta a largura da imagem */
-    height: 300px; /* Aumenta a altura da imagem */
-    border-radius: 0px; /* Bordas arredondadas para combinar com o card */
-    object-fit: cover; /* Ajusta a imagem sem distorção */
+    width: 320px;
+    height: 300px;
+    border-radius: 10px 0 0 10px;
+    object-fit: cover;
 }
 
 .room-info {
-    flex: 1; /* Ocupa o espaço restante */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 30px; /* Espaçamento maior entre as linhas */
+    gap: 30px;
     text-align: left;
+    margin-top: 0vh;
 }
 
 .categorie-info {
     font-weight: bold;
-    font-size: 1.1rem; /* Aumenta o tamanho do texto das categorias */
+    font-size: 1.1rem;
 }
 
 #linha {
